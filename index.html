@@ -4,51 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Photo Management</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            padding: 20px;
-        }
-        #categories {
-            display: flex;
-            justify-content: space-around;
-            margin-bottom: 20px;
-        }
-        .category {
-            cursor: pointer;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-        .category:hover {
-            background-color: #f0f0f0;
-        }
-        #photo-list {
-            display: flex;
-            flex-wrap: wrap;
-        }
-        .photo {
-            border: 1px solid #ddd;
-            margin: 10px;
-            padding: 10px;
-            width: 200px;
-        }
-        .photo img {
-            max-width: 100%;
-            height: auto;
-        }
-    </style>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <h1>Photo Management</h1>
     <div id="categories">
-        <div class="category" data-category="animals" onclick="navigateTo('animals')">Animals</div>
-        <div class="category" data-category="plants" onclick="navigateTo('plants')">Plants</div>
-        <div class="category" data-category="misc" onclick="navigateTo('misc')">Miscellaneous</div>
+        <div class="category" onclick="navigateToCategory('animals')">Animals</div>
+        <div class="category" onclick="navigateToCategory('plants')">Plants</div>
+        <div class="category" onclick="navigateToCategory('other')">Other</div>
     </div>
-
     <script>
-        function navigateTo(category) {
+        function navigateToCategory(category) {
             window.location.href = category + ".html";
         }
     </script>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Photo</title>
+    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <h1>Add New Photo</h1>
+    <form id="photo-form">
+        <input type="hidden" id="category" name="category">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required class="form-control"><br><br>
+        <label for="url">URL:</label>
+        <input type="url" id="url" name="url" required class="form-control"><br><br>
+        <label for="description">Description:</label>
+        <input type="text" id="description" name="description" required class="form-control"><br><br>
+        <button type="submit" class="btn btn-primary">Add Photo</button>
+    </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const apiUrl = "/api/photos";
+            const photoForm = document.getElementById("photo-form");
+
+            // Set category from URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const category = urlParams.get('category');
+            document.getElementById('category').value = category;
+
+            // Add new photo
+            photoForm.addEventListener("submit", function(event) {
+                event.preventDefault();
+                const newPhoto = {
+                    category: photoForm.category.value,
+                    title: photoForm.title.value,
+                    url: photoForm.url.value,
+                    description: photoForm.description.value
+                };
+
+                fetch(apiUrl, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(newPhoto)
+                })
+                .then(response => {
+                    if (!response.ok) {
+                        return response.text().then(text => {
+                            throw new Error(text);
+                        });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    // Show success message
+                    alert("Photo added successfully!");
+
+                    // Redirect to the previous page
+                    window.history.back();
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert("Failed to add photo: " + error.message);
+                });
+            });
+        });
+    </script>
+</body>
+</html>
